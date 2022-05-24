@@ -49,6 +49,7 @@ module.exports = {
         })
     },
     login: function(req, res) {
+        console.log("ok")
         // parameters 
         var lawyer_id = req.body.lawyer_id;
         var password  = req.body.password;
@@ -58,7 +59,7 @@ module.exports = {
             return res.status(400).json({'error': 'missing parameters'})
         }
         models.lawyer.findOne({
-            where: {firstname: firstname, lastname: lastname}
+            where: {lawyer_id: lawyer_id}
         })
         .then(function(lawyerFound){
             if(lawyerFound){
@@ -68,7 +69,7 @@ module.exports = {
                         return res.status(200).json({
                             'lawyer\'s firstname': lawyerFound.firstname,
                             'lawyer\'s lastname': lawyerFound.lastname,
-                            'token': 'the token'
+                            'token': jwtUtils.generateTokenForLawyer(lawyerFound)
                         });
                     } else {
                         return res.state(403).json({ 'error': 'invalid password' });
