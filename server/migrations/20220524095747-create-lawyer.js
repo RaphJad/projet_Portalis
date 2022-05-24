@@ -17,6 +17,12 @@ module.exports = {
       birthdate: {
         type: Sequelize.DATE
       },
+      lawyer_id: {
+        type: Sequelize.STRING
+      },
+      password: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
