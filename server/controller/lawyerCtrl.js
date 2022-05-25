@@ -6,10 +6,10 @@ var models   = require('../models');
 module.exports = {
     create: function(req, res) {
         var firstname  = req.body.firstname;
-        var lastname  = req.body.lastname;
-        var birthdate = req.body.birthdate;
-        var lawyer_id = req.body.lawyer_id;
-        var password  = req.body.password;
+        var lastname   = req.body.lastname;
+        var birthdate  = req.body.birthdate;
+        var lawyer_id  = req.body.lawyer_id;
+        var password   = req.body.password;
         //send an error if the firstname or lastname ar nulls
         if (firstname == null || lastname == null){
             return res.status(400).json({'error': 'missing parameters'});
@@ -122,6 +122,7 @@ module.exports = {
             return res.status(500).json({ 'error': 'unable to check the lawyers'});
         })
     },
+    //TODO: refaire la méthode prorprement si j'ai le temps
     remove_lawyer: async function(req,res){
         //parameters
         var lawyer_id = req.body.lawyer_id;
