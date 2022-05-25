@@ -17,6 +17,12 @@ module.exports = {
       date: {
         type: Sequelize.DATE
       },
+      validated: {
+        type: Sequelize.BOOLEAN
+      },
+      author: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

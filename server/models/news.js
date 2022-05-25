@@ -16,7 +16,9 @@ module.exports = (sequelize, DataTypes) => {
   news.init({
     title: DataTypes.STRING,
     content: DataTypes.STRING,
-    date: DataTypes.DATE
+    date: DataTypes.DATE,
+    validated: DataTypes.BOOLEAN,
+    author: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'news',
