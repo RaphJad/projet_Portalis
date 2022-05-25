@@ -50,7 +50,6 @@ module.exports = {
         })
     },
     login: function(req, res) {
-        console.log("ok")
         // parameters 
         var lawyer_id = req.body.lawyer_id;
         var password  = req.body.password;
@@ -123,7 +122,13 @@ module.exports = {
             return res.status(500).json({ 'error': 'unable to check the lawyers'});
         })
     },
-    remove_lawyer: function(req,res){
-        //
+    remove_lawyer: async function(req,res){
+        //parameters
+        var lawyer_id = req.body.lawyer_id;
+
+        await models.lawyer.destroy({
+            where: {lawyer_id: lawyer_id}
+        })
+        return res.status(200).json({'status': 'done'});
     }
 }

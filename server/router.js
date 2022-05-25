@@ -11,6 +11,7 @@ exports.router = (function() {
     apiRouter.route('/lawyer/login/').post(lawyerCtrl.login);
     apiRouter.route('/lawyer/getLawyerInfos/').get(lawyerCtrl.get_lawyer_info);
     apiRouter.route('/lawyer/getLawyers/').get(lawyerCtrl.getAllLwyer);
+    apiRouter.route('/lawyer/rmLawyer/').delete(lawyerCtrl.remove_lawyer);
     //cv_line
 
     return apiRouter;
