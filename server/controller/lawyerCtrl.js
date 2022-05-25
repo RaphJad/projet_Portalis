@@ -37,6 +37,7 @@ module.exports = {
                         })
                     })
                     .catch(function(err) {
+                        console.log(err);
                         return res.status(500).json({ 'error': 'cannot add user'});
                     });
                 });
@@ -82,5 +83,47 @@ module.exports = {
         .catch(function(err) {
             return res.status(500).json({ 'error': 'unable to check the lawyer'});
         });
+    },
+    get_lawyer_info: function(req, res) {
+        //getting auth header
+        var headerAuth = req.headers['authorization'];
+        var lawyer_id  = jwtUtils.getLawyerID(headerAuth);
+
+        if (lawyer_id < 0){
+            return res.status(400).json( { 'error' : 'wrong token' });
+        }
+
+        models.lawyer.findOne({
+            attributes: ['firstname', 'lastname', 'birthdate'],
+            where: {lawyer_id: lawyer_id}
+        }).then(function(lawyer) {
+            if(lawyer) {
+                return res.status(201).json(lawyer);
+            } else {
+                return res.status(404).json( { 'error' : 'lawyer not found'});
+            }
+        }).catch(function(err) {
+            return res.status(500).json( { 'error' : 'cannot fetch the lawyer'});
+        });
+    },
+    getAllLwyer: function(req, res) {
+        models.lawyer.findAll({
+            attributes: ['firstname', 'lastname', 'birthdate', 'lawyer_id']
+        })
+        .then(function(lawyers) {
+            if (lawyers) {
+                return res.status(200).json({
+                    'lawyers': lawyers
+                });
+            } else {
+                return res.status(404).json({'error': 'no lawyer found'});
+            }
+        })
+        .catch(function(err) {
+            return res.status(500).json({ 'error': 'unable to check the lawyers'});
+        })
+    },
+    remove_lawyer: function(req,res){
+        //
     }
 }

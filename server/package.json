@@ -9,6 +9,7 @@
   "author": "Raphaël Jadin",
   "license": "ISC",
   "dependencies": {
+    "async": "^3.2.3",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",

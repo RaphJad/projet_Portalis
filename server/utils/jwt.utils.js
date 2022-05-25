@@ -8,12 +8,27 @@ module.exports = {
     generateTokenForLawyer: function(lawyerData){
         return jwt.sign({
             lawyer_id: lawyerData.lawyer_id,
-            firstname: lawyerData.firstname,
-            lastname: lawyerData.lastname
         },
         JWT_SIGN_SECRET,
         {
             expiresIn: '1h'
         })
+    },
+    parseAuthorization: function(authorization) {
+        return (authorization != null) ? authorization.replace('Baere ', '') : null;
+    },
+    getLawyerID: function(authorization){
+        var lawyerId = -1; 
+        var token = module.exports.parseAuthorization(authorization);
+        console.log(token)
+        if(token != null){
+            try {
+                var jwtToken = jwt.verify(token, JWT_SIGN_SECRET)
+                if(jwtToken != null){
+                    lawyerId = jwtToken.lawyer_id;
+                }
+            } catch (err){  }
+        }
+        return lawyerId;
     }
 }
