@@ -102,5 +102,17 @@ module.exports = {
             console.log(err);
             return res.status(500).json({ 'error': 'unable to check the line' });
         })
+    },
+    getallLines: function(req, res){
+        models.cv_line.findAll().then(function(linesFound){
+            if(linesFound){
+                return res.status(200).json({'cv_line': linesFound});
+            } else {
+                return res.status(404).json({ 'error': 'no cv line to show'});
+            }
+        }).catch(function(err){
+            console.log(err);
+            return res.status(500).json({ 'error': 'unable to check the line' });
+        })
     }
 }
