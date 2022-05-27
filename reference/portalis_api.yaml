@@ -4,186 +4,667 @@ x-stoplight:
 info:
   title: portalis_api
   version: '1.0'
+  summary: an api for the lawyers firm portalis
+  description: ''
 servers:
   - url: 'http://localhost:3000'
 paths:
-  '/users/{userId}':
-    parameters:
-      - schema:
-          type: integer
-        name: userId
-        in: path
-        required: true
-        description: Id of an existing user.
+  /api/lawyer/create/:
+    post:
+      summary: ''
+      operationId: post-api-lawyer-create
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  lawyer' id:
+                    type: integer
+                x-examples:
+                  example-1:
+                    lawyer' id: 3
+        '400':
+          description: missing parameters
+        '500':
+          description: Internal Server Error
+      description: create and add a lawyer to the database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstname:
+                  type: string
+                lastname:
+                  type: string
+                birthdate:
+                  type: string
+                lawyer_id:
+                  type: string
+                password:
+                  type: string
+              x-examples:
+                example-1:
+                  firstname: Olivier
+                  lastname: Jadin
+                  birthdate: '1965-04-23 12:12:12'
+                  lawyer_id: OJ
+                  password: hello*world
+  /api/lawyer/login/:
+    post:
+      summary: ''
+      operationId: post-api-lawyer-login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  lawyer's firstname:
+                    type: string
+                  lawyer's lastname:
+                    type: string
+                  token:
+                    type: string
+                x-examples:
+                  example-1:
+                    lawyer's firstname: Olivier
+                    lawyer's lastname: Jadin
+                    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXd5ZXJfaWQiOiJPSiIsImlhdCI6MTY1MzY2NDg1MiwiZXhwIjoxNjUzNjY4NDUyfQ.jUq1jsYABDd0pHoP29JyEWwpwycGE4gv44r4wG-JZNA
+        '403':
+          description: wrong password
+        '404':
+          description: lawyer not found
+        '500':
+          description: Internal Server Error
+      description: Generate a token for the user if id and password are corrects and returns the token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                example-1:
+                  lawyer_id: OJ
+                  password: hello*world
+              properties:
+                lawyer_id:
+                  type: string
+                password:
+                  type: string
+              required:
+                - lawyer_id
+                - password
+        description: ''
+  /api/lawyer/getLawyers/:
     get:
-      summary: Get User Info by User ID
+      summary: Your GET endpoint
       tags: []
       responses:
         '200':
-          description: User Found
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-              examples:
-                Get User Alice Smith:
-                  value:
-                    id: 142
-                    firstName: Alice
-                    lastName: Smith
-                    email: alice.smith@gmail.com
-                    dateOfBirth: '1997-10-31'
-                    emailVerified: true
-                    signUpDate: '2019-08-24'
+                type: object
+                properties:
+                  lawyers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        firstname:
+                          type: string
+                        lastname:
+                          type: string
+                        birthdate:
+                          type: string
+                        lawyer_id:
+                          type: string
+                x-examples:
+                  example-1:
+                    lawyers:
+                      - firstname: Raphaël
+                        lastname: Jadin
+                        birthdate: '1998-06-01T10:12:12.000Z'
+                        lawyer_id: RJ
+                      - firstname: Olivier
+                        lastname: Jadin
+                        birthdate: '1965-04-23T11:12:12.000Z'
+                        lawyer_id: OJ
+                      - firstname: Charlotte
+                        lastname: Cresson
+                        birthdate: '1998-11-24T11:12:12.000Z'
+                        lawyer_id: CC
         '404':
-          description: User Not Found
-      operationId: get-users-userId
-      description: Retrieve the information of the user with the matching user ID.
-    patch:
-      summary: Update User Information
-      operationId: patch-users-userId
-      responses:
-        '200':
-          description: User Updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-              examples:
-                Updated User Rebecca Baker:
-                  value:
-                    id: 13
-                    firstName: Rebecca
-                    lastName: Baker
-                    email: rebecca@gmail.com
-                    dateOfBirth: '1985-10-02'
-                    emailVerified: false
-                    createDate: '2019-08-24'
-        '404':
-          description: User Not Found
-        '409':
-          description: Email Already Taken
-      description: Update the information of an existing user.
+          description: lawyers Not Found
+        '500':
+          description: Internal Server Error
+      operationId: get-api-lawyer-getLawyers
       requestBody:
         content:
           application/json:
             schema:
               type: object
-              properties:
-                firstName:
-                  type: string
-                lastName:
-                  type: string
-                email:
-                  type: string
-                  description: 'If a new email is given, the user''s email verified property will be set to false.'
-                dateOfBirth:
-                  type: string
-            examples:
-              Update First Name:
-                value:
-                  firstName: Rebecca
-              Update Email:
-                value:
-                  email: rebecca@gmail.com
-              Update Last Name & Date of Birth:
-                value:
-                  lastName: Baker
-                  dateOfBirth: '1985-10-02'
-        description: Patch user properties to update.
-  /user:
+              properties: {}
+  /api/lawyer/rmLawyer/:
+    parameters: []
+    delete:
+      summary: ''
+      operationId: delete-api-lawyer-rmLawyer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    status: done
+      description: remove lawyer from the database
+  /api/cv_line/create:
     post:
-      summary: Create New User
-      operationId: post-user
+      summary: ''
+      operationId: post-api-cv_line-create
       responses:
         '200':
-          description: User Created
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-              examples:
-                New User Bob Fellow:
-                  value:
-                    id: 12
-                    firstName: Bob
-                    lastName: Fellow
-                    email: bob.fellow@gmail.com
-                    dateOfBirth: '1996-08-24'
-                    emailVerified: false
-                    createDate: '2020-11-18'
-        '400':
-          description: Missing Required Information
-        '409':
-          description: Email Already Taken
+                type: object
+                properties:
+                  cv_line:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      content:
+                        type: string
+                      date:
+                        type: string
+                      type:
+                        type: string
+                      lawyer_id:
+                        type: string
+                      updatedAt:
+                        type: string
+                      createdAt:
+                        type: string
+                x-examples:
+                  example-1:
+                    cv_line:
+                      id: 2
+                      content: hellooooo
+                      date: '2016-05-18T10:14:13.000Z'
+                      type: pub
+                      lawyer_id: OJ
+                      updatedAt: '2022-05-27T15:48:25.940Z'
+                      createdAt: '2022-05-27T15:48:25.940Z'
+        '500':
+          description: Internal Server Error
+      description: create a cv line and add it to the database
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: jwt
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                firstName:
+                content:
                   type: string
-                lastName:
+                date:
                   type: string
-                email:
+                type:
                   type: string
-                dateOfBirth:
+              x-examples:
+                example-1:
+                  content: hellooooo
+                  date: '2016-05-18 12:14:13'
+                  type: pub
+  /api/cv_line/remove/:
+    delete:
+      summary: ''
+      operationId: delete-api-cv_line-remove
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                x-examples:
+                  example-1:
+                    content: hellooooo
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '500':
+          description: Internal Server Error
+      description: |
+        remove a cv line
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: jwt
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  /api/cv_line/update:
+    put:
+      summary: ''
+      operationId: put-api-cv_line-update
+      responses:
+        '200':
+          description: OK
+      description: change a cv line
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: jwt
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                old_content:
                   type: string
-                  format: date
-              required:
-                - firstName
-                - lastName
-                - email
-                - dateOfBirth
-            examples:
-              Create User Bob Fellow:
-                value:
-                  firstName: Bob
-                  lastName: Fellow
-                  email: bob.fellow@gmail.com
-                  dateOfBirth: '1996-08-24'
-        description: Post the necessary fields for the API to create a new user.
-      description: Create a new user.
+                new_content:
+                  type: string
+                new_date:
+                  type: string
+              x-examples:
+                example-1:
+                  old_content: hellooooo
+                  new_content: coucou
+                  new_date: '2000-05-18 10:14:13'
+  /api/cv_line/getAll:
+    get:
+      summary: ''
+      operationId: get-api-cv_line-getAll
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cv_line:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        content:
+                          type: string
+                        date:
+                          type: string
+                        type:
+                          type: string
+                        lawyer_id:
+                          type: string
+                        createdAt:
+                          type: string
+                        updatedAt:
+                          type: string
+                x-examples:
+                  example-1:
+                    cv_line:
+                      - id: 1
+                        content: coucou
+                        date: '2000-05-18T08:14:13.000Z'
+                        type: pub
+                        lawyer_id: RJ
+                        createdAt: '2022-05-25T20:16:33.000Z'
+                        updatedAt: '2022-05-25T20:17:53.000Z'
+                      - id: 2
+                        content: hellooooo
+                        date: '2016-05-18T10:14:13.000Z'
+                        type: pub
+                        lawyer_id: OJ
+                        createdAt: '2022-05-27T15:48:25.000Z'
+                        updatedAt: '2022-05-27T15:48:25.000Z'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  /api/news/create:
+    post:
+      summary: ''
+      operationId: post-api-news-create
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  news:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      title:
+                        type: string
+                      content:
+                        type: string
+                      date:
+                        type: string
+                      validated:
+                        type: boolean
+                      author:
+                        type: string
+                      updatedAt:
+                        type: string
+                      createdAt:
+                        type: string
+                x-examples:
+                  example-1:
+                    news:
+                      id: 4
+                      title: resoudre un problème
+                      content: bien reliere ce qu'on a écrit
+                      date: '2022-05-25T21:23:23.000Z'
+                      validated: false
+                      author: OJ
+                      updatedAt: '2022-05-27T16:17:09.407Z'
+                      createdAt: '2022-05-27T16:17:09.407Z'
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: jwt
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+                date:
+                  type: string
+              x-examples:
+                example-1:
+                  title: resoudre un problème
+                  content: bien reliere ce qu'on a écrit
+                  date: '2022-05-25 23:23:23'
+  /api/news/approveNews:
+    put:
+      summary: ''
+      operationId: put-api-news-approveNews
+      responses:
+        '200':
+          description: OK
+      description: approve a news
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: jwt
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+                author:
+                  type: string
+              x-examples:
+                example-1:
+                  title: resoudre une erreur
+                  content: bien reliere ce qu'on a écrit
+                  author: RJ
+        description: ''
+  /api/news/update:
+    put:
+      summary: ''
+      operationId: put-api-news-update
+      responses:
+        '200':
+          description: OK
+      description: modify an existing news
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: jwt
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                old_title:
+                  type: string
+                old_content:
+                  type: string
+                old_date:
+                  type: string
+                new_title:
+                  type: string
+                new_content:
+                  type: string
+                date:
+                  type: string
+              x-examples:
+                example-1:
+                  old_title: resoudre un problème
+                  old_content: bien reliere ce qu'on a écrit
+                  old_date: '2022-05-25T21:23:23.000Z'
+                  new_title: 'yes'
+                  new_content: it works
+                  date: '2022-06-25T21:23:23.000Z'
+  /api/news/remove:
+    delete:
+      summary: ''
+      operationId: delete-api-news-remove
+      responses:
+        '200':
+          description: OK
+      description: remove a news from the database
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: jwt
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/xml:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+                date:
+                  type: string
+              x-examples:
+                example-1:
+                  title: resoudre un problème
+                  content: bien reliere ce qu'on a écrit
+                  date: '2022-05-25T21:23:23.000Z'
+          multipart/form-data:
+            schema:
+              type: object
+              properties: {}
+          text/html:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+                date:
+                  type: string
+              x-examples:
+                example-1:
+                  title: resoudre un problème
+                  content: bien reliere ce qu'on a écrit
+                  date: '2022-05-25T21:23:23.000Z'
+        description: ''
+  /api/news/getAll:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  news:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        title:
+                          type: string
+                        content:
+                          type: string
+                        date:
+                          type: string
+                        validated:
+                          type: boolean
+                        author:
+                          type: string
+                        createdAt:
+                          type: string
+                        updatedAt:
+                          type: string
+                x-examples:
+                  example-1:
+                    news:
+                      - id: 1
+                        title: resoudre une erreur
+                        content: bien reliere ce qu'on a écrit
+                        date: '2022-05-25T21:23:23.000Z'
+                        validated: true
+                        author: RJ
+                        createdAt: '2022-05-25T21:29:47.000Z'
+                        updatedAt: '2022-05-26T12:34:24.000Z'
+                      - id: 3
+                        title: 'yes'
+                        content: it works
+                        date: '2022-05-25T21:23:23.000Z'
+                        validated: false
+                        author: RJ
+                        createdAt: '2022-05-26T12:51:12.000Z'
+                        updatedAt: '2022-05-26T12:53:35.000Z'
+                      - id: 4
+                        title: resoudre un problème
+                        content: bien reliere ce qu'on a écrit
+                        date: '2022-05-25T21:23:23.000Z'
+                        validated: false
+                        author: OJ
+                        createdAt: '2022-05-27T16:17:09.000Z'
+                        updatedAt: '2022-05-27T16:17:09.000Z'
+      operationId: get-api-news-getAll
 components:
   schemas:
-    User:
-      title: User
+    lawyer:
+      title: lawyer
+      x-stoplight:
+        id: r1la1cbxir9jq
       type: object
-      description: ''
-      examples:
-        - id: 142
-          firstName: Alice
-          lastName: Smith
-          email: alice.smith@gmail.com
-          dateOfBirth: '1997-10-31'
-          emailVerified: true
-          signUpDate: '2019-08-24'
       properties:
         id:
           type: integer
-          description: Unique identifier for the given user.
-        firstName:
+        firstname:
           type: string
-        lastName:
+        lastname:
           type: string
-        email:
+        birthdate:
           type: string
-          format: email
-        dateOfBirth:
+        lawyer_id:
           type: string
-          format: date
-          example: '1997-10-31'
-        emailVerified:
+        password:
+          type: string
+        status:
+          type: string
+    cv_line:
+      title: cv_line
+      x-stoplight:
+        id: zjvmmi4l0dc2i
+      type: object
+      properties:
+        id:
+          type: integer
+        content:
+          type: string
+        date:
+          type: string
+        type:
+          type: string
+        lawyer_id:
+          type: string
+    news:
+      title: news
+      x-stoplight:
+        id: jm8g1in1m5rb1
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        content:
+          type: string
+        date:
+          type: string
+        validated:
           type: boolean
-          description: Set to true if the user's email has been verified.
-        createDate:
+        author:
           type: string
-          format: date
-          description: The date that the user was created.
-      required:
-        - id
-        - firstName
-        - lastName
-        - email
-        - emailVerified
