@@ -2,9 +2,11 @@
 var express    = require('express');
 var bodyParser = require('body-parser');
 var apiRouter  = require('./router').router;
+var cors = require('cors');
+const { apply } = require('async');
 //instantiate the server
 var server = express();
-
+server.use(cors());
 //body-parser configuration récup les arguments et les paramètres fournis dans le corps d'une requete http
 server.use(bodyParser.urlencoded({extend: true }));
 server.use(bodyParser.json());

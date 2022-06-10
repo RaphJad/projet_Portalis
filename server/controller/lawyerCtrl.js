@@ -112,7 +112,7 @@ module.exports = {
         .then(function(lawyers) {
             if (lawyers) {
                 return res.status(200).json({
-                    'lawyers': lawyers
+                    lawyers
                 });
             } else {
                 return res.status(404).json({'error': 'no lawyer found'});
