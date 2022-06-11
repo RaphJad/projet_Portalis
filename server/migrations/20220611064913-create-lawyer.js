@@ -20,6 +20,9 @@ module.exports = {
       lawyer_id: {
         type: Sequelize.STRING
       },
+      status: {
+        type: Sequelize.STRING
+      },
       password: {
         type: Sequelize.STRING
       },

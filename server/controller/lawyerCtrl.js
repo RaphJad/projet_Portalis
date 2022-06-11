@@ -10,6 +10,7 @@ module.exports = {
         var birthdate  = req.body.birthdate;
         var lawyer_id  = req.body.lawyer_id;
         var password   = req.body.password;
+        var status     = req.body.status;
         //send an error if the firstname or lastname ar nulls
         if (firstname == null || lastname == null){
             return res.status(400).json({'error': 'missing parameters'});
@@ -29,7 +30,8 @@ module.exports = {
                         lastname: lastname,
                         birthdate: birthdate,
                         lawyer_id: lawyer_id,
-                        password: bcryptedPassword
+                        password: bcryptedPassword,
+                        status: status
                     })
                     .then(function(new_lawyer) {
                         return res.status(201).json({
@@ -107,7 +109,7 @@ module.exports = {
     },
     getAllLwyer: function(req, res) {
         models.lawyer.findAll({
-            attributes: ['firstname', 'lastname', 'birthdate', 'lawyer_id']
+            attributes: ['firstname', 'lastname', 'birthdate', 'lawyer_id','status']
         })
         .then(function(lawyers) {
             if (lawyers) {
