@@ -10,13 +10,13 @@ import { LawyersComponent } from './lawyers/lawyers.component';
 
 //on importe common
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LawyersComponent,
-    HomeComponent
+    LoginComponent,
   ],
   imports: [
     CommonModule,

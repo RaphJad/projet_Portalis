@@ -1,8 +1,81 @@
-<h2> Lawyers List </h2>
-
+<h1> Lawyers List </h1>
+<h2>Associés</h2>
 <ul>
-    <li *ngFor="let l of lawyers">
-        {{l.firstname}}
-        {{l.lastname}}
+    <li *ngFor="let l of lawyers_AS">
+        <ul>
+            <h4>{{l.full_name}}</h4>
+            <h5 *ngIf="l.lines_sch.length != 0">Parcours académique :</h5>
+            <ul>
+                <li *ngFor="let line of l.lines_sch">
+                    {{line.content}}
+                </li>
+            </ul>
+            <h5 *ngIf="l.lines_pub.length != 0">Publications :</h5>
+            <ul>
+                <li *ngFor="let line of l.lines_pub">
+                    {{line.content}}
+                </li>
+            </ul>
+            <h5 *ngIf="l.lines_pub.length != 0">Matières traitées :</h5>
+            <ul>
+                <li *ngFor="let line of l.lines_foe">
+                    {{line.content}}
+                </li>
+            </ul>
+        </ul>
     </li>
+</ul>
+<h3>Collaborateurs</h3>
+<ul>
+    <li *ngFor="let l of lawyers_COL">
+        <ul>
+            <h4>{{l.full_name}}</h4>
+            <h5 *ngIf="l.lines_sch.length != 0">Parcours académique :</h5>
+            <ul>
+                <li *ngFor="let line of l.lines_sch">
+                    {{line.content}}
+                </li>
+            </ul>
+            <h5 *ngIf="l.lines_pub.length != 0">Publications :</h5>
+            <ul>
+                <li *ngFor="let line of l.lines_pub">
+                    {{line.content}}
+                </li>
+            </ul>
+            <h5 *ngIf="l.lines_pub.length != 0">Matières traitées :</h5>
+            <ul>
+                <li *ngFor="let line of l.lines_foe">
+                    {{line.content}}
+                </li>
+            </ul>
+        </ul>
+    </li>
+</ul>
+<h3>Collaborateurs externes</h3>
+<ul>
+    <ul>
+        <li *ngFor="let l of lawyers_COLX">
+            <ul>
+                <h4>{{l.full_name}}</h4>
+                <h5 *ngIf="l.lines_sch.length != 0">Parcours académique :</h5>
+                <ul>
+                    <li *ngFor="let line of l.lines_sch">
+                        {{line.content}}
+                    </li>
+                </ul>
+                <h5 *ngIf="l.lines_pub.length != 0">Publications :</h5>
+                <ul>
+                    <li *ngFor="let line of l.lines_pub">
+                        {{line.content}}
+                    </li>
+                </ul>
+                <h5 *ngIf="l.lines_pub.length != 0">Matières traitées :</h5>
+                <ul>
+                    <li *ngFor="let line of l.lines_foe">
+                        {{line.content}}
+                    </li>
+                </ul>
+            </ul>
+        </li>
+    </ul>
 </ul>

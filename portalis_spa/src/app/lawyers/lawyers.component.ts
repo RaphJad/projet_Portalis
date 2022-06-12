@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Lawyer, RestService } from '../rest.service';
+import { Lawyer, lines_sch, lines_pub, lines_foe, RestService } from '../rest.service';
 
 @Component({
   selector: 'app-lawyers',
@@ -9,20 +9,36 @@ import { Lawyer, RestService } from '../rest.service';
 })
 export class LawyersComponent implements OnInit {
 
-  lawyers: Lawyer[] = [];
-
+  lawyers_AS: Lawyer[] = [];
+  lawyers_COL: Lawyer[] = [];
+  lawyers_COLX: Lawyer[] = [];
+   
   constructor(public rest:RestService, private route:Router) { }
 
-  ngOnInit(): void {
-    this.getLawyers(); //on appelle cette méthode à l'initialisation du composant
+  ngOnInit():void {
+    this.getLawyersAS();
+    this.getLawyersCOL();
+    this.getLawyersCOLX();
   }
 
-  getLawyers(){
-    this.rest.getLawyers().subscribe(
+  getLawyersCOL(){
+    this.rest.getLawyersCOL().subscribe(
       (resp) => {
-        console.log(resp);
-        this.lawyers = resp.lawyers;
-        console.log(this.lawyers)
+        this.lawyers_COL = resp.lawyers;
+      }
+    )
+  }
+  async getLawyersAS(){
+    this.rest.getLawyersAS().subscribe(
+      async (resp) => {
+        this.lawyers_AS = resp.lawyers;
+      }
+    )
+  }
+  getLawyersCOLX(){
+    this.rest.getLawyersCOLX().subscribe(
+      (resp) => {
+        this.lawyers_COLX = resp.lawyers;
       }
     )
   }
