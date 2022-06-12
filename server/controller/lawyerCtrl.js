@@ -76,7 +76,8 @@ module.exports = {
                             'token': jwtUtils.generateTokenForLawyer(lawyerFound)
                         });
                     } else {
-                        return res.state(403).json({ 'error': 'invalid password' });
+                        console.log('hellp');
+                        return res.status(403).json({ 'error': 'invalid password' });
                     }         
                 });
             } else {

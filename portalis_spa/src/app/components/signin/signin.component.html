@@ -1,1 +1,8 @@
-<p>signin works!</p>
+<div>
+    <h1>Login</h1>
+    <input type="text" [(ngModel)]="lawyer.lawyer_id" placeholder="Id avocat"><br>
+    <input type="password" [(ngModel)]="lawyer.password" placeholder="Mot de passe"><br>
+
+    <button (click)="signin(lawyer)">Login</button>
+</div>
+ 

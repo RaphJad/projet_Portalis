@@ -7,6 +7,8 @@ import { Lawyer, lines_sch, lines_pub, lines_foe, RestService } from '../../shar
   templateUrl: './lawyers.component.html',
   styleUrls: ['./lawyers.component.css']
 })
+
+
 export class LawyersComponent implements OnInit {
 
   lawyers_AS: Lawyer[] = [];

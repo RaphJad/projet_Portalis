@@ -4,6 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+//pour gerer les formulaires avec angular
+import { FormsModule } from '@angular/forms';
+
 //on importe la librairie http client
 import { HttpClientModule } from '@angular/common/http';
 import { LawyersComponent } from './components/lawyers/lawyers.component';
@@ -26,7 +29,8 @@ import { LawyerProfileComponent } from './components/lawyer-profile/lawyer-profi
     CommonModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
