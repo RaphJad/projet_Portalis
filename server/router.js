@@ -13,11 +13,16 @@ exports.router = (function() {
     apiRouter.route('/lawyer/getLawyerInfos/').get(lawyerCtrl.get_lawyer_info);
     apiRouter.route('/lawyer/getLawyers/').get(lawyerCtrl.getAllLwyer);
     apiRouter.route('/lawyer/rmLawyer/').delete(lawyerCtrl.remove_lawyer);
+    apiRouter.route('/lawyer/getLawyerAS/').get(lawyerCtrl.get_lawyer_AS);
+    apiRouter.route('/lawyer/getLawyerCOL/').get(lawyerCtrl.get_lawyer_COL);
+    apiRouter.route('/lawyer/getLawyerCOLX/').get(lawyerCtrl.get_lawyer_COLX);
     //cv_line
     apiRouter.route('/cv_line/create').post(cv_lineCtrl.create);
     apiRouter.route('/cv_line/remove').delete(cv_lineCtrl.remove);
     apiRouter.route('/cv_line/update').put(cv_lineCtrl.updateCvLine);
     apiRouter.route('/cv_line/getAll').get(cv_lineCtrl.getallLines);
+    apiRouter.route('/cv_line/getLinesByLawyer').get(cv_lineCtrl.getLineByLawyer);
+
     //news
     apiRouter.route('/news/create').post(newsCtrl.create);
     apiRouter.route('/news/approve').put(newsCtrl.approveNews);

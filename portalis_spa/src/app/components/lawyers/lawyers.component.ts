@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Lawyer, lines_sch, lines_pub, lines_foe, RestService } from '../rest.service';
+import { Lawyer, lines_sch, lines_pub, lines_foe, RestService } from '../../shared/rest.service';
 
 @Component({
   selector: 'app-lawyers',

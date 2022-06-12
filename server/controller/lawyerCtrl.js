@@ -2,6 +2,8 @@
 var bcrypt   = require('bcrypt');
 var jwtUtils = require('../utils/jwt.utils');
 var models   = require('../models');
+var cvline   = require('../controller/cv_lineCtrl.js');
+
 //routes
 module.exports = {
     create: function(req, res) {
@@ -133,5 +135,68 @@ module.exports = {
             where: {lawyer_id: lawyer_id}
         })
         return res.status(200).json({'status': 'done'});
+    },
+    
+    async get_lawyer_AS(req, res) {
+        var status = "AS";
+        models.lawyer.findAll({
+            attributes: ['firstname', 'lastname', 'birthdate', 'lawyer_id','status'],
+            where: {status: status}
+        }).then(async function (lawyers){
+            if (lawyers) {
+                    //add the cv line to the lawyers before sending them
+                    for (let i=0, len=lawyers.length; i<len; i++){
+                        lawyer_cvlines = await cvline.getLineByLawyer(lawyers[i].lawyer_id);
+                        lawyers[i] = {"full_name": lawyers[i].firstname + " " + lawyers[i].lastname, "birthdate":lawyers[i].birthdate, "lawyer_id":lawyers[i].lawyer_id,"lines_sch": lawyer_cvlines.lines_sch, "lines_pub": lawyer_cvlines.lines_pub, "lines_foe": lawyer_cvlines.lines_foe};
+                    }
+                    return res.status(200).json({lawyers});
+            } else {
+                return res.status(404).json({'error': 'no lawyer found'});
+            }
+        })
+    },
+    async get_lawyer_COL(req, res) {
+        var status = "COL";
+        models.lawyer.findAll({
+            where: {status: status},
+            attributes: ['firstname', 'lastname', 'birthdate', 'lawyer_id','status']
+        })
+        .then(async function(lawyers){
+            if (lawyers) {
+                //add the cv line to the lawyers before sending them
+                for (let i=0, len=lawyers.length; i<len; i++){
+                    lawyer_cvlines = await cvline.getLineByLawyer(lawyers[i].lawyer_id);
+                    lawyers[i] = {"full_name": lawyers[i].firstname + " " + lawyers[i].lastname, "birthdate":lawyers[i].birthdate, "lawyer_id":lawyers[i].lawyer_id,"lines_sch": lawyer_cvlines.lines_sch, "lines_pub": lawyer_cvlines.lines_pub, "lines_foe": lawyer_cvlines.lines_foe};
+                }
+                return res.status(200).json({lawyers});
+            } else {
+                return res.status(404).json({'error': 'no lawyer found'});
+            }
+        }).catch(function(err) {
+            return res.status(500).json({ 'error': 'unable to check the lawyers'});
+        });
+    },
+    async get_lawyer_COLX(req, res) {
+        var status = "COLX";
+        models.lawyer.findAll({
+            where: {status: status},
+            attributes: ['firstname', 'lastname', 'birthdate', 'lawyer_id','status']
+        })
+        .then(async function(lawyers){
+            if (lawyers) {
+                //add the cv line to the lawyers before sending them
+                for (let i=0, len=lawyers.length; i<len; i++){
+                    lawyer_cvlines = await cvline.getLineByLawyer(lawyers[i].lawyer_id);
+                    lawyers[i] = {"full_name": lawyers[i].firstname + " " + lawyers[i].lastname, "birthdate":lawyers[i].birthdate, "lawyer_id":lawyers[i].lawyer_id,"lines_sch": lawyer_cvlines.lines_sch, "lines_pub": lawyer_cvlines.lines_pub, "lines_foe": lawyer_cvlines.lines_foe};
+                }
+                return res.status(200).json({lawyers});
+            } else {
+                console.log(lawyers)
+                return res.status(404).json({'error': 'no lawyer found'});
+            }
+        }).catch(function(err) {
+            console
+            return res.status(500).json({ 'error': 'unable to check the lawyers'});
+        });
     }
-};
+}

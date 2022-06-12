@@ -67,7 +67,9 @@ module.exports = {
                 })
                 return res.status(200).json({'status': 'done'});
             } else {
-                return res.status(404).json({ 'error': 'line to delete not found'});
+                return res.status(404).json({ 'error':
+                
+                 'line to delete not found'});
             }
         })
         .catch(function(err){
@@ -114,5 +116,30 @@ module.exports = {
             console.log(err);
             return res.status(500).json({ 'error': 'unable to check the line' });
         })
+    },
+    async getLineByLawyer(lawyer_id){
+        //get the lawyer's id from the param
+        // var lawyer_id = req.query.lawyer_id;
+        var lines_sch = await models.cv_line.findAll({
+            where: {lawyer_id: lawyer_id, type: 'sch'},
+            order: ['date'],
+            attributes: ['content', 'date', 'type']
+        })
+        var lines_pub = await models.cv_line.findAll({
+            where: {lawyer_id: lawyer_id, type: 'pub'},
+            order: ['date'],
+            attributes: ['content', 'date', 'type']
+        });
+        var lines_foe = await models.cv_line.findAll({
+            where: {lawyer_id: lawyer_id, type: 'foe'},
+            order: ['date'],
+            attributes: ['content', 'date', 'type']
+        });
+        if(lines_sch && lines_pub && lines_foe){
+            return {lines_sch, lines_pub, lines_foe};
+        }
+        else{
+            return res.status(404).json({ 'error': 'no cv line to show'});
+        }
     }
 }
