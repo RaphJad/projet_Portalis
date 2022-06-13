@@ -73,11 +73,11 @@ module.exports = {
                         return res.status(200).json({
                             'lawyer\'s firstname': lawyerFound.firstname,
                             'lawyer\'s lastname': lawyerFound.lastname,
-                            'token': jwtUtils.generateTokenForLawyer(lawyerFound)
+                            'token': jwtUtils.generateTokenForLawyer(lawyerFound),
+                            'status': "success"
                         });
                     } else {
-                        console.log('hellp');
-                        return res.status(403).json({ 'error': 'invalid password' });
+                        return res.status(401).json({ 'error': "invalid password" });
                     }         
                 });
             } else {

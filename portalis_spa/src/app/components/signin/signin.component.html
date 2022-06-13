@@ -1,8 +1,9 @@
 <div>
     <h1>Login</h1>
+    <h2 *ngIf="show_wrong_password_or_id == true">Erreur : Mauvais mot de passe ou mauvais ID</h2>
     <input type="text" [(ngModel)]="lawyer.lawyer_id" placeholder="Id avocat"><br>
     <input type="password" [(ngModel)]="lawyer.password" placeholder="Mot de passe"><br>
 
-    <button (click)="signin(lawyer)">Login</button>
+    <button (click)="login(lawyer)">Login</button>
 </div>
  

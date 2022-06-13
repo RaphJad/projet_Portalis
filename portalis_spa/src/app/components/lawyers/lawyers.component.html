@@ -1,5 +1,5 @@
 <h1> Lawyers List </h1>
-<h2>Associés</h2>
+<h2 *ngIf="lawyers_AS.length != 0">Associés</h2>
 <ul>
     <li *ngFor="let l of lawyers_AS">
         <ul>
@@ -25,7 +25,7 @@
         </ul>
     </li>
 </ul>
-<h3>Collaborateurs</h3>
+<h3 *ngIf="lawyers_COL.length != 0">Collaborateurs</h3>
 <ul>
     <li *ngFor="let l of lawyers_COL">
         <ul>
@@ -51,7 +51,7 @@
         </ul>
     </li>
 </ul>
-<h3>Collaborateurs externes</h3>
+<h3 *ngIf="lawyers_COLX.length != 0">Collaborateurs externes</h3>
 <ul>
     <ul>
         <li *ngFor="let l of lawyers_COLX">

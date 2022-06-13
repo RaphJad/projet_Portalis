@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 import { SigninComponent } from './components/signin/signin.component';
 import { CreateLawyerComponent } from './components/create-lawyer/create-lawyer.component';
 import { LawyerProfileComponent } from './components/lawyer-profile/lawyer-profile.component';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { LawyerProfileComponent } from './components/lawyer-profile/lawyer-profi
     SigninComponent,
     CreateLawyerComponent,
     LawyerProfileComponent,
+    ErrorPageComponent,
   ],
   imports: [
     CommonModule,
