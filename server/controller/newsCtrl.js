@@ -76,17 +76,17 @@ module.exports = {
         //getting auth header
         var headerAuth = req.headers['authorization'];
         var author  = jwtUtils.getLawyerID(headerAuth);
+        console.log(author);
         if (author < 0){
             return res.status(400).json( { 'error' : 'wrong token' });
         }
         var old_title   = req.body.old_title;
-        var old_content = req.body.old_content;
-        var old_date    = req.body.old_date;
         var new_title   = req.body.new_title;
         var new_content = req.body.new_content;
         var new_date    = req.body.new_date; 
+        console.log(new_title)
         models.news.findOne({
-            where: {title: old_title, content: old_content, date: old_date, author: author}
+            where: {title: old_title, author: author}
         }).then(function(foundNews){
             if(foundNews){
                 foundNews.update({

@@ -1,39 +1,154 @@
 <div>
-    <h1>{{lawyer.full_name}}</h1>
+    <form>
+        
+        <div class="row">
+            <legend>{{lawyer.full_name}}</legend>
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1" *ngIf="lawyer.lines_sch.length != 0">Parcours académique</h5>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let line of lawyer.lines_sch">{{line.content}}</li>
+                    </ul>
+                </a>
+                <a class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1" *ngIf="lawyer.lines_pub.length != 0">Publications et autres</h5>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let line of lawyer.lines_pub">{{line.content}}</li>
+                    </ul>
+                </a>
+                <a class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1" *ngIf="lawyer.lines_foe.length != 0">Matières Traitées</h5>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let line of lawyer.lines_foe">{{line.content}}</li>
+                    </ul>
+                </a>
+                <br>
+            </div>
+            <div class="form-group">
 
-    <ul>
-        <h5 *ngIf="lawyer.lines_sch.length != 0">Parcours académique :</h5>
-        <ul>
-            <li *ngFor="let line of lawyer.lines_sch">
-                {{line.content}}
-            </li>
-        </ul>
-        <h5 *ngIf="lawyer.lines_pub.length != 0">Publications :</h5>
-        <ul>
-            <li *ngFor="let line of lawyer.lines_pub">
-                {{line.content}}
-            </li>
-        </ul>
-        <h5 *ngIf="lawyer.lines_foe.length != 0">Matières traitées :</h5>
-        <ul>
-            <li *ngFor="let line of lawyer.lines_foe">
-                {{line.content}}
-            </li>
-        </ul>
-    </ul>
-    <div>
-        <input type="text" [(ngModel)]="content2add" placeholder="contenu de la ligne à ajouter">
-        <input type="date" data-date-format="YYYY-MM-DD" [(ngModel)]="date2add" placeholder="contenu de la ligne à ajouter">
-        <select name="type" id="type-select" [(ngModel)]="type2add">
-            <option>choisir un type d'élément de cv</option>
-            <option value="sch" >académique</option>
-            <option value="pub">pubblication</option>
-            <option value="foe">domaine de compétance</option>
-        </select>
-        <button (click)="addLine()">Ajouter une ligne au CV</button><div>
-    <div><input type="text" [(ngModel)]="content2remove" placeholder="contenu de la ligne à supprimer">
-        <button (click)="removeLine(content2remove)">Supprimer la ligne</button>
-    </div>
-    <div><button (click)="addNews()">Ajouter une news</button></div>
-</div>
+                <!-- part to add a line to the cv -->
+                <div>
+                    <legend>Ajouter une ligne au C.V.</legend>
+
+                    <label for="Contenu de la ligne" class="form-label mt-4">Contenu de la ligne</label>
+                    <input type="text" [(ngModel)]="content2add" [ngModelOptions]="{standalone: true}" class="form-control" id="Contenu de la ligne" placeholder="Contenu de la ligne">
+                    <label for="Date" class="form-label mt-4">Date</label>
+                    <input type="date" data-date-format="YYYY-MM-DD" [(ngModel)]="date2add" [ngModelOptions]="{standalone: true}" class="form-control" id="Date" placeholder="Date">
+                    <label for="selectType" class="form-label mt-4">Sélectionner le type de ligne</label>
+                    <select class="form-select" id="selectType" [(ngModel)]="type2add" [ngModelOptions]="{standalone: true}">
+                        <option val="sch">Parcours académique</option>
+                        <option val="pub">Publications et autres</option>
+                        <option val="foe">Matières Traitées</option>
+                    </select>
+                    <br>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-lg btn-primary" type="button" (click)="addLine()">Ajouter la ligne au C.V.</button>
+                    </div>
+                </div> <br>
+
+                <!-- part to modify a line of the cv -->
+                <div>
+                    <legend>Modifier une ligne du C.V.</legend>
+
+                    <label for="Contenu de la ligne" class="form-label mt-4">Contenu de la ligne à modifier</label>
+                    <input type="text" [(ngModel)]="content2modify" [ngModelOptions]="{standalone: true}" class="form-control" id="Contenu de la ligne" placeholder="Contenu de la ligne">
+                    <label for="Date" class="form-label mt-4">Date</label>
+                    <input type="date" data-date-format="YYYY-MM-DD" [(ngModel)]="newDate" [ngModelOptions]="{standalone: true}" class="form-control" id="Date" placeholder="Date">
+                    <label for="Contenu de la ligne" class="form-label mt-4">Nouveau contenu de la ligne à modifier</label>
+                    <input type="text" [(ngModel)]="newContent" [ngModelOptions]="{standalone: true}" class="form-control" id="Nouveau contenu de la ligne" placeholder="Contenu de la ligne">
+                    <br>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-lg btn-primary" type="button" (click)="updateLine()">Modifier la ligne du C.V.</button>
+                    </div>
+                </div> <br>
+
+                <!-- part to remove a line of the cv -->
+                <div>
+                    <legend>Supprimer une ligne du C.V.</legend>
+
+                    <label for="Contenu de la ligne" class="form-label mt-4">Contenu de la ligne à supprimer</label>
+                    <input type="text" [(ngModel)]="content2remove" [ngModelOptions]="{standalone: true}" class="form-control" id="Contenu de la ligne" placeholder="Contenu de la ligne">
+                    <br>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-lg btn-primary" type="button" (click)="removeLine(content2remove)">Supprimer la ligne du C.V.</button>
+                    </div>
+                </div> <br>
+
+                <!-- part to add a news -->
+                <div>
+                    <legend>Ajouter une news</legend>
+
+                    <label for="Contenu de la ligne" class="form-label mt-4">Titre de la news</label>
+                    <input type="text" [(ngModel)]="title2add" [ngModelOptions]="{standalone: true}" class="form-control" id="Contenu de la ligne" placeholder="Titre de la news">
+
+                    <label for="exampleTextarea" class="form-label mt-4">Contenu de la news</label>
+                    <textarea class="form-control" id="exampleTextarea" rows="5" [(ngModel)]="contentNews2add" [ngModelOptions]="{standalone: true}"></textarea><br>
+
+                    <label for="Date" class="form-label mt-4">Date</label>
+                    <input type="date" data-date-format="YYYY-MM-DD" [(ngModel)]="dateNews" [ngModelOptions]="{standalone: true}" class="form-control" id="Date" placeholder="Date"><br>
+
+                    <button class="btn btn-lg btn-primary" type="button" (click)="addNews()">Ajouter la news</button>
+
+                </div><br>
+
+                <!-- part to modify a news -->
+                <div>
+                    <legend>Modifier une news</legend>
+
+                    <label for="Contenu de la ligne" class="form-label mt-4">Titre de la news à modifier</label>
+                    <input type="text" [(ngModel)]="title2modify" [ngModelOptions]="{standalone: true}" class="form-control" id="Contenu de la ligne" placeholder="Titre de la news à modifier">
+                    
+                    <label for="Contenu de la ligne" class="form-label mt-4">Nouveau Titre de la news à modifier</label>
+                    <input type="text" [(ngModel)]="newTitleNews" [ngModelOptions]="{standalone: true}" class="form-control" id="Contenu de la ligne" placeholder="Nouveau titre de la news à modifier">
+
+                    <label for="exampleTextarea" class="form-label mt-4">Nouveau contenu de la news</label>
+                    <textarea class="form-control" id="exampleTextarea" rows="5" [(ngModel)]="newContentNews" [ngModelOptions]="{standalone: true}"></textarea><br>
+
+                    <label for="Date" class="form-label mt-4">Date</label>
+                    <input type="date" data-date-format="YYYY-MM-DD" [(ngModel)]="newDateNews" [ngModelOptions]="{standalone: true}" class="form-control" id="Date" placeholder="Date"><br>
+
+                    <button class="btn btn-lg btn-primary" type="button" (click)="updateNews()">Modifier la news</button>
+                    
+                </div>
+                <br>
+                <!-- part for OJ -->
+                <div *ngIf="lawyer.lawyer_id == 'OJ'">
+                    <h1>Administration</h1>
+                    <!-- Part to add a lawyer -->
+                    <div>
+                        <legend>Ajouter un avocat</legend>
+
+                        <label for="Contenu de la ligne" class="form-label mt-4">Prénom de l'avocat à ajouter</label>
+                        <input type="text" [(ngModel)]="lawyer2add.first_name" [ngModelOptions]="{standalone: true}" class="form-control" id="Contenu de la ligne" placeholder="Prénom de l'avocat à ajouter">
+
+                        <label for="Contenu de la ligne" class="form-label mt-4">Nom de famille de l'avocat à ajouter</label>
+                        <input type="text" [(ngModel)]="lawyer2add.last_name" placeholder="Nom de famille de l'avocat à ajouter" [ngModelOptions]="{standalone: true}" class="form-control" id="Contenu de la ligne" >
+
+                        <label for="Date" class="form-label mt-4">Date</label>
+                        <input type="date" data-date-format="YYYY-MM-DD" [(ngModel)]="lawyer2add.birthdate" [ngModelOptions]="{standalone: true}" class="form-control" id="Date" placeholder="Date"><br>
+
+                        <label for="Contenu de la ligne" class="form-label mt-4">ID de l'avocat à ajouter</label>
+                        <input type="text" [(ngModel)]="lawyer2add.lawyer_id" placeholder="ID de l'avocat à ajouter" [ngModelOptions]="{standalone: true}" class="form-control" id="Contenu de la ligne" >
+
+                        <label for="Contenu de la ligne" class="form-label mt-4">Mot de passe de l'avocat à ajouter</label>
+                        <input type="text" [(ngModel)]="lawyer2add.password" placeholder="Mot de passe de l'avocat à ajouter" [ngModelOptions]="{standalone: true}" class="form-control" id="Contenu de la ligne" >
+
+                        <label for="Contenu de la ligne" class="form-label mt-4">Status de l'avocat à ajouter</label>
+                        <input type="text" [(ngModel)]="lawyer2add.status" placeholder="Status de l'avocat à ajouter" [ngModelOptions]="{standalone: true}" class="form-control" id="Contenu de la ligne" >
+
+                        <button class="btn btn-lg btn-primary" type="button" (click)="updateNews()">Modifier la news</button>
+                    
+                    </div>
+                </div>
+
+            </div>
+        </div>
+      </form> 
+</div><br><br>
 

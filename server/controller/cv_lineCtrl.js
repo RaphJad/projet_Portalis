@@ -15,7 +15,7 @@ module.exports = {
         var content   = req.body.content;
         var date      = req.body.date;
         var type      = req.body.type;
-        console.log(content);
+        console.log(req.body);
         if (content == null || type == null || lawyer_id == null){
             return res.status(400).json({'error': 'missing parameters'});
         }

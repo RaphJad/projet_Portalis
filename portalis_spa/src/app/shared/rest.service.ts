@@ -40,7 +40,7 @@ export class RestService {
 
   constructor(private http: HttpClient) { }
 
-  
+  //for the lawyers
   getLawyersAS(): Observable<any> {
     return this.http.get<Lawyer>(endpoint + 'lawyer/getLawyerAS/');
   }
@@ -56,13 +56,28 @@ export class RestService {
   getLawyerCV(token: string): Observable<any> {
     return this.http.get<Lawyer>(endpoint + 'lawyer/getLawyerInfos/');
   }
+  
 
+  //for the cv lines
   removeLine(content: string): Observable<any> {
     return this.http.delete(endpoint + 'cv_line/remove/',{body: {"content": content}});
   }
 
   addLine(content: string, type: string, date: Date): Observable<any> {
     return this.http.post(endpoint + 'cv_line/create/',{"content":content , "type":type, "date":date});
+  }
+
+  updateLine(content: string, newContent: string, newDate: Date): Observable<any> {
+    return this.http.put(endpoint + 'cv_line/update/',{"old_content":content , "new_content":newContent, "new_date":newDate});
+  }
+
+  //for the news
+  addNews(title: string, content: string, date:Date): Observable<any> {
+    return this.http.post(endpoint + 'news/create/',{"title":title , "content":content, "date":date});
+  }
+
+  updateNews(title: string, new_title:string, content: string, date:Date): Observable<any> {
+    return this.http.put(endpoint + 'news/update/',{"old_title":title , "new_title":new_title, "new_content":content, "new_date":date});
   }
 
 }

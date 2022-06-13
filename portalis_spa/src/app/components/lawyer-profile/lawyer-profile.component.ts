@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Lawyer, RestService } from 'src/app/shared/rest.service';
+import { rawLawyer } from 'src/app/shared/rawLawyer';
 
 @Component({
   selector: 'app-lawyer-profile',
   templateUrl: './lawyer-profile.component.html',
   styleUrls: ['./lawyer-profile.component.css']
 })
+
+
+
 export class LawyerProfileComponent implements OnInit {
 
   lawyer: Lawyer= {
@@ -16,18 +20,41 @@ export class LawyerProfileComponent implements OnInit {
     lines_pub: [],
     lines_foe: []
   };
-
+  //to add a line to the CV
   content2add:string = "";
   type2add:string = "";
   date2add:Date = new Date();
+  //to modify a line of the CV
+  content2modify:string = "";
+  newContent:string = "";
+  newDate:Date = new Date();
+  //to remove a line of the CV
   content2remove:string = "";
+  //to add a news
+  title2add:string = "";
+  contentNews2add:string = "";
+  dateNews:Date = new Date();
+  //to modify a news
+  title2modify:string = "";
+  newTitleNews:string = "";
+  newContentNews:string = "";
+  newDateNews:Date = new Date();
+  //to add a lawyer
+  lawyer2add:rawLawyer = {
+    first_name: '',
+    last_name: '',
+    birthdate: new Date(),
+    lawyer_id: '',
+    password: '',
+    status: ''
+  }
 
   constructor(private rest:RestService, private route:Router) { }
 
   ngOnInit(): void {
     this.getLawyer();
   }
-
+  //For the lawyer
   getLawyer(){
       var token = localStorage.getItem('token');
       if(token == null){
@@ -44,19 +71,45 @@ export class LawyerProfileComponent implements OnInit {
         }
       )
     }
-
+  addLawyer(){
+    
+  }
+  //For the cv lines  
   addLine(){
     console.log(this.content2add);
     console.log(this.type2add);
     console.log(this.date2add);
+    if(this.type2add == "Parcours académique"){
+      this.type2add = "sch";
+    } else if (this.type2add == "Publications et autres"){
+      this.type2add = "pub";
+    }else{
+      this.type2add = "foe";
+    }
     this.rest.addLine(this.content2add, this.type2add, this.date2add).subscribe();
     window.location.reload();
   }
-  addNews(){
-    this.route.navigate(['/add_news']);
+  
+  updateLine(){
+    this.rest.updateLine(this.content2modify, this.newContent, this.newDate).subscribe();
+    window.location.reload();
   }
   removeLine(content:string){
     this.rest.removeLine(content).subscribe();
     window.location.reload();
   }
+
+  //For the news
+  addNews(){
+    this.rest.addNews(this.title2add, this.contentNews2add, this.dateNews).subscribe();
+    window.location.reload();
+  }
+
+  updateNews(){
+    this.rest.updateNews(this.title2modify, this.newTitleNews, this.newContentNews, this.newDateNews).subscribe();
+    window.location.reload();
+  }
+
+
+
 }
