@@ -9,7 +9,6 @@ const endpoint = "http://localhost:3000/api/";
 //on définit une interface lawyer pour l'utiliser partout
 export interface Lawyer {
   full_name: string;
-  birthdate: Date;
   lawyer_id: string;
   lines_sch: lines_sch[];
   lines_pub: lines_pub[];
@@ -54,8 +53,16 @@ export class RestService {
     return this.http.get<Lawyer>(endpoint + 'lawyer/getLawyerCOLX/');
   }
 
-  getCVlawyer(lawyer_id: string): Observable<any> {
-    var params = new HttpParams().set('lawyer_id', lawyer_id);
-    return this.http.get(endpoint + 'cv_line/getLinesByLawyer', { params: params });
+  getLawyerCV(token: string): Observable<any> {
+    return this.http.get<Lawyer>(endpoint + 'lawyer/getLawyerInfos/');
   }
+
+  removeLine(content: string): Observable<any> {
+    return this.http.delete(endpoint + 'cv_line/remove/',{body: {"content": content}});
+  }
+
+  addLine(content: string, type: string, date: Date): Observable<any> {
+    return this.http.post(endpoint + 'cv_line/create/',{"content":content , "type":type, "date":date});
+  }
+
 }

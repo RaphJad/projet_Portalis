@@ -28,11 +28,10 @@ export class SigninComponent implements OnInit {
         if(resp){
           let resSTR = JSON.stringify(resp);
           let resJSON = JSON.parse(resSTR);
-          console
           if(resJSON.status == 'success'){
             localStorage.setItem('token', resJSON.token);
             localStorage.setItem('lawyer_id', resJSON.lawyer_id);
-            this.route.navigate(['/avocats']);
+            this.route.navigate(['/lawyer_profile']);
           }
           else{
             this.show_wrong_password_or_id = true;

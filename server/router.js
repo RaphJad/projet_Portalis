@@ -21,7 +21,6 @@ exports.router = (function() {
     apiRouter.route('/cv_line/remove').delete(cv_lineCtrl.remove);
     apiRouter.route('/cv_line/update').put(cv_lineCtrl.updateCvLine);
     apiRouter.route('/cv_line/getAll').get(cv_lineCtrl.getallLines);
-    apiRouter.route('/cv_line/getLinesByLawyer').get(cv_lineCtrl.getLineByLawyer);
 
     //news
     apiRouter.route('/news/create').post(newsCtrl.create);

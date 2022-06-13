@@ -1,1 +1,39 @@
-<p>lawyer-profile works!</p>
+<div>
+    <h1>{{lawyer.full_name}}</h1>
+
+    <ul>
+        <h5 *ngIf="lawyer.lines_sch.length != 0">Parcours académique :</h5>
+        <ul>
+            <li *ngFor="let line of lawyer.lines_sch">
+                {{line.content}}
+            </li>
+        </ul>
+        <h5 *ngIf="lawyer.lines_pub.length != 0">Publications :</h5>
+        <ul>
+            <li *ngFor="let line of lawyer.lines_pub">
+                {{line.content}}
+            </li>
+        </ul>
+        <h5 *ngIf="lawyer.lines_foe.length != 0">Matières traitées :</h5>
+        <ul>
+            <li *ngFor="let line of lawyer.lines_foe">
+                {{line.content}}
+            </li>
+        </ul>
+    </ul>
+    <div>
+        <input type="text" [(ngModel)]="content2add" placeholder="contenu de la ligne à ajouter">
+        <input type="date" data-date-format="YYYY-MM-DD" [(ngModel)]="date2add" placeholder="contenu de la ligne à ajouter">
+        <select name="type" id="type-select" [(ngModel)]="type2add">
+            <option>choisir un type d'élément de cv</option>
+            <option value="sch" >académique</option>
+            <option value="pub">pubblication</option>
+            <option value="foe">domaine de compétance</option>
+        </select>
+        <button (click)="addLine()">Ajouter une ligne au CV</button><div>
+    <div><input type="text" [(ngModel)]="content2remove" placeholder="contenu de la ligne à supprimer">
+        <button (click)="removeLine(content2remove)">Supprimer la ligne</button>
+    </div>
+    <div><button (click)="addNews()">Ajouter une news</button></div>
+</div>
+

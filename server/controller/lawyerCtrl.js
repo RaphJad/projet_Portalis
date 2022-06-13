@@ -88,20 +88,20 @@ module.exports = {
             return res.status(500).json({ 'error': 'unable to check the lawyer'});
         });
     },
-    get_lawyer_info: function(req, res) {
+    get_lawyer_info: async function(req, res) {
         //getting auth header
         var headerAuth = req.headers['authorization'];
         var lawyer_id  = jwtUtils.getLawyerID(headerAuth);
-
         if (lawyer_id < 0){
             return res.status(400).json( { 'error' : 'wrong token' });
         }
-
         models.lawyer.findOne({
-            attributes: ['firstname', 'lastname', 'birthdate'],
+            attributes: ['firstname', 'lastname', 'birthdate', 'lawyer_id'],
             where: {lawyer_id: lawyer_id}
-        }).then(function(lawyer) {
-            if(lawyer) {
+        }).then(async function(lawyer) {
+            if(lawyer != null) {
+                lawyer_cvline = await cvline.getLineByLawyer_for_backend(lawyer.lawyer_id);
+                var lawyer = {"full_name": lawyer.firstname + " " + lawyer.lastname, "birthdate":lawyer.birthdate, "lawyer_id":lawyer.lawyer_id, "lines_sch":lawyer_cvline.lines_sch, "lines_pub":lawyer_cvline.lines_pub, "lines_foe":lawyer_cvline.lines_foe, "lines_exp":lawyer_cvline.lines_exp, "lines_pro":lawyer_cvline.lines_pro, "lines_edu":lawyer_cvline.lines_edu, "lines_lang":lawyer_cvline.lines_lang, "lines_other":lawyer_cvline.lines_foe};
                 return res.status(201).json(lawyer);
             } else {
                 return res.status(404).json( { 'error' : 'lawyer not found'});
@@ -147,7 +147,8 @@ module.exports = {
             if (lawyers) {
                     //add the cv line to the lawyers before sending them
                     for (let i=0, len=lawyers.length; i<len; i++){
-                        lawyer_cvlines = await cvline.getLineByLawyer(lawyers[i].lawyer_id);
+                        lawyer_cvlines = await cvline.getLineByLawyer_for_backend(lawyers[i].lawyer_id);
+                        console.log(lawyer_cvlines);
                         lawyers[i] = {"full_name": lawyers[i].firstname + " " + lawyers[i].lastname, "birthdate":lawyers[i].birthdate, "lawyer_id":lawyers[i].lawyer_id,"lines_sch": lawyer_cvlines.lines_sch, "lines_pub": lawyer_cvlines.lines_pub, "lines_foe": lawyer_cvlines.lines_foe};
                     }
                     return res.status(200).json({lawyers});
@@ -166,7 +167,7 @@ module.exports = {
             if (lawyers) {
                 //add the cv line to the lawyers before sending them
                 for (let i=0, len=lawyers.length; i<len; i++){
-                    lawyer_cvlines = await cvline.getLineByLawyer(lawyers[i].lawyer_id);
+                    lawyer_cvlines = await cvline.getLineByLawyer_for_backend(lawyers[i].lawyer_id);
                     lawyers[i] = {"full_name": lawyers[i].firstname + " " + lawyers[i].lastname, "birthdate":lawyers[i].birthdate, "lawyer_id":lawyers[i].lawyer_id,"lines_sch": lawyer_cvlines.lines_sch, "lines_pub": lawyer_cvlines.lines_pub, "lines_foe": lawyer_cvlines.lines_foe};
                 }
                 return res.status(200).json({lawyers});
@@ -187,7 +188,7 @@ module.exports = {
             if (lawyers) {
                 //add the cv line to the lawyers before sending them
                 for (let i=0, len=lawyers.length; i<len; i++){
-                    lawyer_cvlines = await cvline.getLineByLawyer(lawyers[i].lawyer_id);
+                    lawyer_cvlines = await cvline.getLineByLawyer_for_backend(lawyers[i].lawyer_id);
                     lawyers[i] = {"full_name": lawyers[i].firstname + " " + lawyers[i].lastname, "birthdate":lawyers[i].birthdate, "lawyer_id":lawyers[i].lawyer_id,"lines_sch": lawyer_cvlines.lines_sch, "lines_pub": lawyer_cvlines.lines_pub, "lines_foe": lawyer_cvlines.lines_foe};
                 }
                 return res.status(200).json({lawyers});
@@ -196,7 +197,6 @@ module.exports = {
                 return res.status(404).json({'error': 'no lawyer found'});
             }
         }).catch(function(err) {
-            console
             return res.status(500).json({ 'error': 'unable to check the lawyers'});
         });
     }

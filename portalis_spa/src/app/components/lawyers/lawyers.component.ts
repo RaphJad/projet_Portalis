@@ -30,9 +30,9 @@ export class LawyersComponent implements OnInit {
       }
     )
   }
-  async getLawyersAS(){
+  getLawyersAS(){
     this.rest.getLawyersAS().subscribe(
-      async (resp) => {
+      (resp) => {
         this.lawyers_AS = resp.lawyers;
       }
     )

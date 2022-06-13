@@ -15,6 +15,7 @@ module.exports = {
         var content   = req.body.content;
         var date      = req.body.date;
         var type      = req.body.type;
+        console.log(content);
         if (content == null || type == null || lawyer_id == null){
             return res.status(400).json({'error': 'missing parameters'});
         }
@@ -117,7 +118,7 @@ module.exports = {
             return res.status(500).json({ 'error': 'unable to check the line' });
         })
     },
-    async getLineByLawyer(lawyer_id){
+    async getLineByLawyer_for_backend(lawyer_id){
         //get the lawyer's id from the param
         // var lawyer_id = req.query.lawyer_id;
         var lines_sch = await models.cv_line.findAll({
@@ -136,10 +137,38 @@ module.exports = {
             attributes: ['content', 'date', 'type']
         });
         if(lines_sch && lines_pub && lines_foe){
-            return {lines_sch, lines_pub, lines_foe};
+            lines = {lines_sch, lines_pub, lines_foe}
+            return lines;
         }
         else{
             return res.status(404).json({ 'error': 'no cv line to show'});
         }
-    }
+    },
+    // getLineByLawyer_for_frontend(req, res){
+    //     //getting the tokens and the lawyer's id
+    //     var headerAuth = req.headers['authorization'];
+    //     var lawyer_id  = jwtUtils.getLawyerID(headerAuth);
+    //     if(lawyer_id < 0){
+    //         return res.status(400).json( { 'error' : 'wrong token' });
+    //     }
+    //     var lines_sch = await models.cv_line.findAll({
+    //         where: {lawyer_id: lawyer_id, type: 'sch'},
+    //         order: ['date'],
+    //         attributes: ['content', 'date', 'type']
+    //     })
+    //     var lines_pub = await models.cv_line.findAll({
+    //         where: {lawyer_id: lawyer_id, type: 'pub'},
+    //         order: ['date'],
+    //         attributes: ['content', 'date', 'type']
+    //     });
+    //     var lines_foe = await models.cv_line.findAll({
+    //         where: {lawyer_id: lawyer_id, type: 'foe'},
+    //         order: ['date'],
+    //         attributes: ['content', 'date', 'type']
+    //     });
+    //     if(lines_sch && lines_pub && lines_foe){
+            
+    //     }
+
+    // }
 }

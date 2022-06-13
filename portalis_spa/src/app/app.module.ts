@@ -8,15 +8,17 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 
 //on importe la librairie http client
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LawyersComponent } from './components/lawyers/lawyers.component';
-
+import { AuthInterceptor } from './shared/authconfig.interceptor';
 //on importe common
 import { CommonModule } from '@angular/common';
 import { SigninComponent } from './components/signin/signin.component';
 import { CreateLawyerComponent } from './components/create-lawyer/create-lawyer.component';
 import { LawyerProfileComponent } from './components/lawyer-profile/lawyer-profile.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
+import { AddCvLineComponent } from './add-cv-line/add-cv-line.component';
+import { AddNewsComponent } from './add-news/add-news.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { ErrorPageComponent } from './components/error-page/error-page.component
     CreateLawyerComponent,
     LawyerProfileComponent,
     ErrorPageComponent,
+    AddCvLineComponent,
+    AddNewsComponent,
   ],
   imports: [
     CommonModule,
@@ -34,7 +38,13 @@ import { ErrorPageComponent } from './components/error-page/error-page.component
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
