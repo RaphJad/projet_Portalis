@@ -32,6 +32,7 @@ export class SigninComponent implements OnInit {
             localStorage.setItem('token', resJSON.token);
             localStorage.setItem('lawyer_id', resJSON.lawyer_id);
             this.route.navigate(['/lawyer_profile']);
+            localStorage.setItem('isLoggedIN', "ok");
           }
           else{
             this.show_wrong_password_or_id = true;

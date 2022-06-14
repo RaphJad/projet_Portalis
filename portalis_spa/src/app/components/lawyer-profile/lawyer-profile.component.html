@@ -131,20 +131,35 @@
                         <input type="text" [(ngModel)]="lawyer2add.last_name" placeholder="Nom de famille de l'avocat à ajouter" [ngModelOptions]="{standalone: true}" class="form-control" id="Contenu de la ligne" >
 
                         <label for="Date" class="form-label mt-4">Date</label>
-                        <input type="date" data-date-format="YYYY-MM-DD" [(ngModel)]="lawyer2add.birthdate" [ngModelOptions]="{standalone: true}" class="form-control" id="Date" placeholder="Date"><br>
+                        <input type="date" data-date-format="YYYY-MM-DD" [(ngModel)]="lawyer2add.birthdate" [ngModelOptions]="{standalone: true}" class="form-control" id="Date" placeholder="Date">
 
                         <label for="Contenu de la ligne" class="form-label mt-4">ID de l'avocat à ajouter</label>
                         <input type="text" [(ngModel)]="lawyer2add.lawyer_id" placeholder="ID de l'avocat à ajouter" [ngModelOptions]="{standalone: true}" class="form-control" id="Contenu de la ligne" >
 
                         <label for="Contenu de la ligne" class="form-label mt-4">Mot de passe de l'avocat à ajouter</label>
-                        <input type="text" [(ngModel)]="lawyer2add.password" placeholder="Mot de passe de l'avocat à ajouter" [ngModelOptions]="{standalone: true}" class="form-control" id="Contenu de la ligne" >
+                        <input type="text" [(ngModel)]="lawyer2add.password" placeholder="Mot de passe de l'avocat à ajouter" [ngModelOptions]="{standalone: true}" class="form-control" id="Contenu de la ligne" ><br>
 
-                        <label for="Contenu de la ligne" class="form-label mt-4">Status de l'avocat à ajouter</label>
-                        <input type="text" [(ngModel)]="lawyer2add.status" placeholder="Status de l'avocat à ajouter" [ngModelOptions]="{standalone: true}" class="form-control" id="Contenu de la ligne" >
+                        <select class="form-select" id="selectType" [(ngModel)]="lawyer2add.status" [ngModelOptions]="{standalone: true}">
+                            <option val="sch">Associé(e)</option>
+                            <option val="pub">Collaborateur/Collaboratrice</option>
+                            <option val="foe">Collaborateur/Collaboratrice externe</option>
+                        </select><br>
 
-                        <button class="btn btn-lg btn-primary" type="button" (click)="updateNews()">Modifier la news</button>
+                        <button class="btn btn-lg btn-primary" type="button" (click)="addLawyer()">Ajouter l'avocat</button>
                     
                     </div>
+                    <br>
+                    <!-- Part to remove a lawyer -->
+                    <div>
+                        <legend>Supprimer un avocat</legend>
+
+                        <label for="Contenu de la ligne" class="form-label mt-4">Id de l'avocat à supprimer</label>
+                        <input type="text" [(ngModel)]="lawyer_id2remove" [ngModelOptions]="{standalone: true}" class="form-control" id="Contenu de la ligne" placeholder="Id de l'avocat à supprimer"><br>
+
+                        <button class="btn btn-lg btn-primary" type="button" (click)="removeLawyer()">Supprimer l'avocat</button>
+
+                    </div>
+
                 </div>
 
             </div>

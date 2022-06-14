@@ -19,6 +19,7 @@ import { LawyerProfileComponent } from './components/lawyer-profile/lawyer-profi
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { AddCvLineComponent } from './add-cv-line/add-cv-line.component';
 import { AddNewsComponent } from './add-news/add-news.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { AddNewsComponent } from './add-news/add-news.component';
     ErrorPageComponent,
     AddCvLineComponent,
     AddNewsComponent,
+    HomeComponent,
   ],
   imports: [
     CommonModule,

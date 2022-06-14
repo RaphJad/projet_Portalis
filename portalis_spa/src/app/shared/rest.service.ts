@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { rawLawyer } from './rawLawyer';
 
 //defining the backend
 const endpoint = "http://localhost:3000/api/";
@@ -40,7 +41,7 @@ export class RestService {
 
   constructor(private http: HttpClient) { }
 
-  //for the lawyers
+  //for the lawyers-----------------------------------------------------------------------------------------------------
   getLawyersAS(): Observable<any> {
     return this.http.get<Lawyer>(endpoint + 'lawyer/getLawyerAS/');
   }
@@ -56,9 +57,15 @@ export class RestService {
   getLawyerCV(token: string): Observable<any> {
     return this.http.get<Lawyer>(endpoint + 'lawyer/getLawyerInfos/');
   }
-  
+  addLawyer(lawyer: rawLawyer): Observable<any> {
+    return this.http.post(endpoint + 'lawyer/create/',{"firstname":lawyer.first_name , "lastname":lawyer.last_name, "birthdate":lawyer.birthdate, "lawyer_id":lawyer.lawyer_id, "password":lawyer.password, "status":lawyer.status});
+  }
 
-  //for the cv lines
+  removeLawyer(lawyer_id: string): Observable<any> {
+    return this.http.delete(endpoint + 'lawyer/remove/',{body: {"lawyer_id": lawyer_id}});
+  }
+
+  //for the cv lines-----------------------------------------------------------------------------------------------------
   removeLine(content: string): Observable<any> {
     return this.http.delete(endpoint + 'cv_line/remove/',{body: {"content": content}});
   }
@@ -71,7 +78,7 @@ export class RestService {
     return this.http.put(endpoint + 'cv_line/update/',{"old_content":content , "new_content":newContent, "new_date":newDate});
   }
 
-  //for the news
+  //for the news--------- ----------------------------------------------------------------------------------------------------
   addNews(title: string, content: string, date:Date): Observable<any> {
     return this.http.post(endpoint + 'news/create/',{"title":title , "content":content, "date":date});
   }

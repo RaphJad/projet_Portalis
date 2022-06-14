@@ -48,6 +48,8 @@ export class LawyerProfileComponent implements OnInit {
     password: '',
     status: ''
   }
+  //to remove a lawyer
+  lawyer_id2remove:string = "";
 
   constructor(private rest:RestService, private route:Router) { }
 
@@ -70,9 +72,22 @@ export class LawyerProfileComponent implements OnInit {
           this.lawyer.lines_foe = resp.lines_foe;
         }
       )
-    }
+  }
   addLawyer(){
-    
+    if(this.lawyer2add.status == "Associé(e)"){
+      this.lawyer2add.status = "AS";
+    } else if(this.lawyer2add.status == "Collaborateur/Collaboratrice"){
+      this.lawyer2add.status = "COL";
+    }
+    else{
+      this.lawyer2add.status = "COLX";
+    }
+    this.rest.addLawyer(this.lawyer2add).subscribe();
+    window.location.reload();
+  }
+  removeLawyer(){
+    this.rest.removeLawyer(this.lawyer_id2remove).subscribe();
+    window.location.reload();
   }
   //For the cv lines  
   addLine(){
@@ -109,7 +124,5 @@ export class LawyerProfileComponent implements OnInit {
     this.rest.updateNews(this.title2modify, this.newTitleNews, this.newContentNews, this.newDateNews).subscribe();
     window.location.reload();
   }
-
-
 
 }
