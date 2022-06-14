@@ -34,6 +34,14 @@ export interface lines_foe {
   type: string;
 }
 
+export interface news{
+  title: string;
+  content: string;
+  date: Date;
+  validated: boolean;
+  author: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -85,6 +93,10 @@ export class RestService {
 
   updateNews(title: string, new_title:string, content: string, date:Date): Observable<any> {
     return this.http.put(endpoint + 'news/update/',{"old_title":title , "new_title":new_title, "new_content":content, "new_date":date});
+  }
+
+  getAllNews(): Observable<any> {
+    return this.http.get<Lawyer>(endpoint + 'news/getAll/');
   }
 
 }

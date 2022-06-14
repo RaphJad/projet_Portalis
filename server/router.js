@@ -12,7 +12,7 @@ exports.router = (function() {
     apiRouter.route('/lawyer/login/').post(lawyerCtrl.login);
     apiRouter.route('/lawyer/getLawyerInfos/').get(lawyerCtrl.get_lawyer_info);
     apiRouter.route('/lawyer/getLawyers/').get(lawyerCtrl.getAllLwyer);
-    apiRouter.route('/lawyer/rmLawyer/').delete(lawyerCtrl.remove_lawyer);
+    apiRouter.route('/lawyer/remove/').delete(lawyerCtrl.remove_lawyer);
     apiRouter.route('/lawyer/getLawyerAS/').get(lawyerCtrl.get_lawyer_AS);
     apiRouter.route('/lawyer/getLawyerCOL/').get(lawyerCtrl.get_lawyer_COL);
     apiRouter.route('/lawyer/getLawyerCOLX/').get(lawyerCtrl.get_lawyer_COLX);

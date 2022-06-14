@@ -1,81 +1,116 @@
-<h1> Lawyers List </h1>
-<h2 *ngIf="lawyers_AS.length != 0">Associés</h2>
-<ul>
-    <li *ngFor="let l of lawyers_AS">
-        <ul>
-            <h4>{{l.full_name}}</h4>
-            <h5 *ngIf="l.lines_sch.length != 0">Parcours académique :</h5>
-            <ul>
-                <li *ngFor="let line of l.lines_sch">
-                    {{line.content}}
+<h1> Liste des avocats du cabinet</h1>
+
+
+<div>
+    <div class="row">
+        <div class="list-group">
+            <legend *ngIf="lawyers_AS.length != 0">Associés</legend>
+            <ul style="list-style-type:none;">
+                <li *ngFor="let lawyer of lawyers_AS">
+                    <a class="list-group-item list-group-item-action flex-column align-items-start">
+                        <legend>{{lawyer.full_name}}</legend>
+                        <div class="list-group">
+                            <a class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" *ngIf="lawyer.lines_sch.length != 0">Parcours académique</h5>
+                                </div>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let line of lawyer.lines_sch">{{line.content}}</li>
+                                </ul>
+                            </a>
+                            <a class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" *ngIf="lawyer.lines_pub.length != 0">Publications et autres</h5>
+                                </div>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let line of lawyer.lines_pub">{{line.content}}</li>
+                                </ul>
+                            </a>
+                            <a class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" *ngIf="lawyer.lines_foe.length != 0">Matières Traitées</h5>
+                                </div>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let line of lawyer.lines_foe">{{line.content}}</li>
+                                </ul>
+                            </a>
+                            <br>
+                        </div>
+                    </a>
                 </li>
             </ul>
-            <h5 *ngIf="l.lines_pub.length != 0">Publications :</h5>
-            <ul>
-                <li *ngFor="let line of l.lines_pub">
-                    {{line.content}}
+            <legend *ngIf="lawyers_COL.length != 0">Collaborateurs/Collaboratrice</legend>
+            <ul style="list-style-type:none;">
+                <li *ngFor="let lawyer of lawyers_COL">
+                    <a class="list-group-item list-group-item-action flex-column align-items-start">
+                        <legend>{{lawyer.full_name}}</legend>
+                        <div class="list-group">
+                            <a class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" *ngIf="lawyer.lines_sch.length != 0">Parcours académique</h5>
+                                </div>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let line of lawyer.lines_sch">{{line.content}}</li>
+                                </ul>
+                            </a>
+                            <a class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" *ngIf="lawyer.lines_pub.length != 0">Publications et autres</h5>
+                                </div>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let line of lawyer.lines_pub">{{line.content}}</li>
+                                </ul>
+                            </a>
+                            <a class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" *ngIf="lawyer.lines_foe.length != 0">Matières Traitées</h5>
+                                </div>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let line of lawyer.lines_foe">{{line.content}}</li>
+                                </ul>
+                            </a>
+                            <br>
+                        </div>
+                    </a>
                 </li>
             </ul>
-            <h5 *ngIf="l.lines_pub.length != 0">Matières traitées :</h5>
-            <ul>
-                <li *ngFor="let line of l.lines_foe">
-                    {{line.content}}
+            <legend *ngIf="lawyers_COLX.length != 0">Collaborateurs/Collaboratrice externes</legend>
+            <ul style="list-style-type:none;">
+                <li *ngFor="let lawyer of lawyers_COLX">
+                    <a class="list-group-item list-group-item-action flex-column align-items-start">
+                        <legend>{{lawyer.full_name}}</legend>
+                        <div class="list-group">
+                            <a class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" *ngIf="lawyer.lines_sch.length != 0">Parcours académique</h5>
+                                </div>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let line of lawyer.lines_sch">{{line.content}}</li>
+                                </ul>
+                            </a>
+                            <a class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" *ngIf="lawyer.lines_pub.length != 0">Publications et autres</h5>
+                                </div>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let line of lawyer.lines_pub">{{line.content}}</li>
+                                </ul>
+                            </a>
+                            <a class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" *ngIf="lawyer.lines_foe.length != 0">Matières Traitées</h5>
+                                </div>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let line of lawyer.lines_foe">{{line.content}}</li>
+                                </ul>
+                            </a>
+                            <br>
+                        </div>
+                    </a>
                 </li>
             </ul>
-        </ul>
-    </li>
-</ul>
-<h3 *ngIf="lawyers_COL.length != 0">Collaborateurs</h3>
-<ul>
-    <li *ngFor="let l of lawyers_COL">
-        <ul>
-            <h4>{{l.full_name}}</h4>
-            <h5 *ngIf="l.lines_sch.length != 0">Parcours académique :</h5>
-            <ul>
-                <li *ngFor="let line of l.lines_sch">
-                    {{line.content}}
-                </li>
-            </ul>
-            <h5 *ngIf="l.lines_pub.length != 0">Publications :</h5>
-            <ul>
-                <li *ngFor="let line of l.lines_pub">
-                    {{line.content}}
-                </li>
-            </ul>
-            <h5 *ngIf="l.lines_pub.length != 0">Matières traitées :</h5>
-            <ul>
-                <li *ngFor="let line of l.lines_foe">
-                    {{line.content}}
-                </li>
-            </ul>
-        </ul>
-    </li>
-</ul>
-<h3 *ngIf="lawyers_COLX.length != 0">Collaborateurs externes</h3>
-<ul>
-    <ul>
-        <li *ngFor="let l of lawyers_COLX">
-            <ul>
-                <h4>{{l.full_name}}</h4>
-                <h5 *ngIf="l.lines_sch.length != 0">Parcours académique :</h5>
-                <ul>
-                    <li *ngFor="let line of l.lines_sch">
-                        {{line.content}}
-                    </li>
-                </ul>
-                <h5 *ngIf="l.lines_pub.length != 0">Publications :</h5>
-                <ul>
-                    <li *ngFor="let line of l.lines_pub">
-                        {{line.content}}
-                    </li>
-                </ul>
-                <h5 *ngIf="l.lines_foe.length != 0">Matières traitées :</h5>
-                <ul>
-                    <li *ngFor="let line of l.lines_foe">
-                        {{line.content}}
-                    </li>
-                </ul>
-            </ul>
-        </li>
-    </ul>
-</ul>
+        </div>
+    </div>
+</div>
+
+

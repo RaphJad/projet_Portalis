@@ -134,7 +134,10 @@ module.exports = {
 
         await models.lawyer.destroy({
             where: {lawyer_id: lawyer_id}
-        })
+        });
+        await models.cv_line.destroy({
+            where: {lawyer_id: lawyer_id}
+        });
         return res.status(200).json({'status': 'done'});
     },
     

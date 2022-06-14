@@ -24,7 +24,7 @@ module.exports = {
                     title: title,
                     content: content,
                     date: date,
-                    validated: false,
+                    validated: true,
                     author: author
                 }).then(function(new_news){
                     return res.status(200).json({'news': new_news});

@@ -1,0 +1,19 @@
+<div>
+    <div class="row">
+        <div class="list-group">
+            <legend>Actualité du cabinet</legend>
+            <ul style="list-style-type:none;">
+                <li *ngFor="let new of news">
+                    <a class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{new.title}}</h5>
+                        <small class="text-muted">{{new.date}}</small>
+                    </div>
+                    <p class="mb-1">{{new.content}}</p>
+                    <small class="text-muted">{{new.author}}</small>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
