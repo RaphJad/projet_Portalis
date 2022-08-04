@@ -22,7 +22,18 @@ export class NewsComponent implements OnInit {
     this.rest.getAllNews().subscribe(
       (resp)=>{
         this.news = resp.news;
+        //change the date format to dd/mm/yyyy
+        for(let i=0; i<this.news.length; i++){
+          this.news[i].date = this.changeDateFormat(this.news[i].date);
+        }
       }
     );
   }
+  //change the date format to dd/mm/yyyy
+  changeDateFormat(date:string){
+    let dateArray = date.split("-");
+    let newDate = dateArray[2]+"/"+dateArray[1]+"/"+dateArray[0];
+    return newDate;
+  }
+
 }

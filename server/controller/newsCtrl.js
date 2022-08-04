@@ -143,9 +143,6 @@ module.exports = {
                 //transform the content of a news into an array of paragraphs to be able to display it in the html
                 for(let news in newsFound){
                     newsFound[news].content = newsFound[news].content.split('\n');
-                    //change dateformat from us to europe
-                    dArr = newsFound.split("-");  // ex input "2010-01-18"
-                    return dArr[2]+ "/" +dArr[1]+ "/" +dArr[0].substring(2);
                 }
                 console.log()
                 return res.status(200).json({"news": newsFound});
