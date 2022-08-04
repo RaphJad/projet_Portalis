@@ -6,7 +6,6 @@ const newsCtrl = require('./controller/newsCtrl');
 //routes
 exports.router = (function() {
     var apiRouter = express.Router();
-    
     //lawyers route
     apiRouter.route('/lawyer/create/').post(lawyerCtrl.create);
     apiRouter.route('/lawyer/login/').post(lawyerCtrl.login);

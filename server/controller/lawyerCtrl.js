@@ -110,6 +110,7 @@ module.exports = {
             return res.status(500).json( { 'error' : 'cannot fetch the lawyer'});
         });
     },
+
     getAllLwyer: function(req, res) {
         models.lawyer.findAll({
             attributes: ['firstname', 'lastname', 'birthdate', 'lawyer_id','status']
@@ -127,7 +128,7 @@ module.exports = {
             return res.status(500).json({ 'error': 'unable to check the lawyers'});
         })
     },
-    //TODO: refaire la méthode prorprement si j'ai le temps
+    
     remove_lawyer: async function(req,res){
         //parameters
         var lawyer_id = req.body.lawyer_id;
@@ -160,6 +161,7 @@ module.exports = {
             }
         })
     },
+
     async get_lawyer_COL(req, res) {
         var status = "COL";
         models.lawyer.findAll({
@@ -181,6 +183,7 @@ module.exports = {
             return res.status(500).json({ 'error': 'unable to check the lawyers'});
         });
     },
+    
     async get_lawyer_COLX(req, res) {
         var status = "COLX";
         models.lawyer.findAll({

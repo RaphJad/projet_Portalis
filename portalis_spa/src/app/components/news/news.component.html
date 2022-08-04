@@ -4,14 +4,18 @@
             <legend>Actualité du cabinet</legend>
             <ul style="list-style-type:none;">
                 <li *ngFor="let new of news">
-                    <a class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{new.title}}</h5>
-                        <small class="text-muted">{{new.date}}</small>
-                    </div>
-                    <p class="mb-1">{{new.content}}</p>
-                    <small class="text-muted">{{new.author}}</small>
-                    </a>
+                    <div class="card card border-primary mb-3" style="max-width: 1000rem;">
+                        <!-- <div class="card-header">Header</div> -->
+                        <div class="card-body">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">List group item heading</h5>
+                                <small>{{new.date}}</small>
+                              </div>
+                          <div *ngFor="let paragraph of new.content">
+                            <p class="mb-1">{{paragraph}}</p>
+                        </div> 
+                        </div>
+                      </div>
                 </li>
             </ul>
         </div>

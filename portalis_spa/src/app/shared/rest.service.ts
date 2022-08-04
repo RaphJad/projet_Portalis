@@ -37,7 +37,7 @@ export interface lines_foe {
 export interface news{
   title: string;
   content: string;
-  date: Date;
+  date: string;
   validated: boolean;
   author: string;
 }
