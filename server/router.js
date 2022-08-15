@@ -27,6 +27,8 @@ exports.router = (function() {
     apiRouter.route('/news/update').put(newsCtrl.update_news);
     apiRouter.route('/news/remove').delete(newsCtrl.remove);
     apiRouter.route('/news/getAll').get(newsCtrl.getAllNews);
+    apiRouter.route('/news/getAllValidated').get(newsCtrl.getValidatedNews);
+    apiRouter.route('/news/getAllUnvalidated').get(newsCtrl.getUnvalidatedNews);
 
     return apiRouter;
 })();

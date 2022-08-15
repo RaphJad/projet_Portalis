@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Lawyer, RestService } from 'src/app/shared/rest.service';
+import { Lawyer, news, RestService } from 'src/app/shared/rest.service';
 import { rawLawyer } from 'src/app/shared/rawLawyer';
 
 @Component({
@@ -51,10 +51,14 @@ export class LawyerProfileComponent implements OnInit {
   //to remove a lawyer
   lawyer_id2remove:string = "";
 
+  //news array for the unvalidated news
+  unvalidatedNews: news[] = [];
+
   constructor(private rest:RestService, private route:Router) { }
 
   ngOnInit(): void {
     this.getLawyer();
+    this.getUnvalidatedNews();
   }
   //For the lawyer
   getLawyer(){
@@ -91,9 +95,6 @@ export class LawyerProfileComponent implements OnInit {
   }
   //For the cv lines  
   addLine(){
-    console.log(this.content2add);
-    console.log(this.type2add);
-    console.log(this.date2add);
     if(this.type2add == "Parcours académique"){
       this.type2add = "sch";
     } else if (this.type2add == "Publications et autres"){
@@ -125,4 +126,31 @@ export class LawyerProfileComponent implements OnInit {
     window.location.reload();
   }
 
+  getUnvalidatedNews(){
+    this.rest.getUnvalidatedNews().subscribe(
+      (resp) => {
+        this.unvalidatedNews = resp.news;
+        for(let i=0; i<this.unvalidatedNews.length; i++){
+          this.unvalidatedNews[i].date = this.changeDateFormat(this.unvalidatedNews[i].date);
+        }
+      }
+    );
+  }
+   //change the date format to dd/mm/yyyy
+  changeDateFormat(date:string){
+    let dateArray = date.split("-");
+    let newDate = dateArray[2]+"/"+dateArray[1]+"/"+dateArray[0];
+    return newDate;
+  }
+
+  validateNews(title:string, author:string){
+    console.log(title);
+    this.rest.validateNews(title, author).subscribe();
+    window.location.reload();
+  }
+
+  removeNews(title:string, author:string){
+    this.rest.removeNews(title, author).subscribe();
+    window.location.reload();
+  }
 }

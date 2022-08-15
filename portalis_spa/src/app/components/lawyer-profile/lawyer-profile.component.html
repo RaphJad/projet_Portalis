@@ -159,6 +159,33 @@
                         <button class="btn btn-lg btn-primary" type="button" (click)="removeLawyer()">Supprimer l'avocat</button>
 
                     </div>
+                    <br>
+                    <!--- Part to validate a news -->
+                    <legend>News à valider</legend>
+                    <div class="list-group">
+                        <ul style="list-style-type:none;">
+                            <li *ngFor="let new of unvalidatedNews">
+                                <br>
+                                <div class="card card border-primary mb-3" style="max-width: 1000rem;">
+                                    <!-- <div class="card-header">Header</div> -->
+                                    <div class="card-body">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">{{new.title}}</h5>
+                                            <small>{{new.date}}</small>
+                                          </div>
+                                      <div *ngFor="let paragraph of new.content">
+                                        <p class="mb-1">{{paragraph}}</p>
+                                    </div> 
+                                    </div>
+                                  </div>
+                                  <button type="button" class="btn btn-success" (click)="validateNews(new.title,new.author)">Valider</button>
+                                  <button type="button" class="btn btn-danger"  (click)="removeNews(new.title, new.author)">Supprimer</button>
+                                  <br>
+                            </li>
+                            <br>
+                        </ul>
+                    </div>
+                    
 
                 </div>
 

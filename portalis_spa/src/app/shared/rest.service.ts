@@ -88,7 +88,7 @@ export class RestService {
 
   //for the news--------- ----------------------------------------------------------------------------------------------------
   addNews(title: string, content: string, date:Date): Observable<any> {
-    return this.http.post(endpoint + 'news/create/',{"title":title , "content":content, "date":date});
+    return this.http.post(endpoint + 'news/create',{"title":title , "content":content, "date":date});
   }
 
   updateNews(title: string, new_title:string, content: string, date:Date): Observable<any> {
@@ -99,4 +99,21 @@ export class RestService {
     return this.http.get<Lawyer>(endpoint + 'news/getAll/');
   }
 
+  getValidatedNews(): Observable<any> {
+    console.log("hello");
+    return this.http.get<Lawyer>(endpoint + 'news/getAllValidated/');
+  }
+
+  getUnvalidatedNews(): Observable<any> {
+    return this.http.get<Lawyer>(endpoint + 'news/getAllUnvalidated/');
+  }
+
+  validateNews(title: string, author: string): Observable<any> {
+    return this.http.put(endpoint + 'news/approve',{"title":title, "author":author});
+  }
+
+  removeNews(title: string, author: string): Observable<any> {
+    return this.http.delete(endpoint + 'news/remove',{body: {"title": title, "author": author}});
+  }
+  
 }

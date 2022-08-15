@@ -19,7 +19,7 @@ export class NewsComponent implements OnInit {
 
   //get all the news
   getNews(){
-    this.rest.getAllNews().subscribe(
+    this.rest.getValidatedNews().subscribe(
       (resp)=>{
         this.news = resp.news;
         //change the date format to dd/mm/yyyy

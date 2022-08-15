@@ -24,7 +24,7 @@ module.exports = {
                     title: title,
                     content: content,
                     date: date,
-                    validated: true,
+                    validated: false,
                     author: author
                 }).then(function(new_news){
                     return res.status(200).json({'news': new_news});
@@ -45,14 +45,14 @@ module.exports = {
         var headerAuth = req.headers['authorization'];
         var lawyer_id  = jwtUtils.getLawyerID(headerAuth);
         if (lawyer_id != 'OJ'){
+            console.log(lawyer_id);
             return res.status(400).json( { 'error' : 'wrong token' });
         }
         var title   = req.body.title;
-        var content = req.body.content;
         var author  = req.body.author;
 
         models.news.findOne({
-            where: {title: title, content: content, author:author}
+            where: {title: title, author:author}
         }).then(function(newsFound){
             console.log(newsFound);
             if(newsFound){
@@ -84,7 +84,6 @@ module.exports = {
         var new_title   = req.body.new_title;
         var new_content = req.body.new_content;
         var new_date    = req.body.new_date; 
-        console.log(new_title)
         models.news.findOne({
             where: {title: old_title, author: author}
         }).then(function(foundNews){
@@ -115,14 +114,13 @@ module.exports = {
             return res.status(400).json( { 'error' : 'wrong token' });
         }
         var title   = req.body.title;
-        var content = req.body.content;
-        var date    = req.body.date
+        var author  = req.body.author;
         models.news.findOne({
-            where: {title: title, content: content, date: date}
+            where: {title: title, author:author}
         }).then(function(foundNews){
             if(foundNews){
                 models.news.destroy({
-                    where: {title: title, content: content, date: date}
+                    where: {title: title, author:author}
                 }).then(function(){
                     return res.status(200).json({ 'status': 'deleted' });
                 }).catch(function(err){
@@ -145,6 +143,43 @@ module.exports = {
                     newsFound[news].content = newsFound[news].content.split('\n');
                 }
                 console.log()
+                return res.status(200).json({"news": newsFound});
+            } else {
+                return res.status(404).json({'error': 'no news to show'});
+            }
+        }).catch(function(err){
+            console.log(err);
+            return res.status(500).json({ 'error': 'unable to check the news' });
+        })
+    },
+
+    getValidatedNews: function(req, res){
+        models.news.findAll({
+            where: {validated: true}
+        }).then(function(newsFound){
+            if(newsFound){
+                //transform the content of a news into an array of paragraphs to be able to display it in the html
+                for(let news in newsFound){
+                    newsFound[news].content = newsFound[news].content.split('\n');
+                }
+                return res.status(200).json({"news": newsFound});
+            } else {
+                return res.status(404).json({'error': 'no news to show'});
+            }
+        }).catch(function(err){
+            console.log(err);
+            return res.status(500).json({ 'error': 'unable to check the news' });
+        })
+    },
+    getUnvalidatedNews: function(req, res){
+        models.news.findAll({
+            where: {validated: false}
+        }).then(function(newsFound){
+            if(newsFound){
+                //transform the content of a news into an array of paragraphs to be able to display it in the html
+                for(let news in newsFound){
+                    newsFound[news].content = newsFound[news].content.split('\n');
+                }
                 return res.status(200).json({"news": newsFound});
             } else {
                 return res.status(404).json({'error': 'no news to show'});
