@@ -2,6 +2,5 @@
 
 #### A Website for the law firm Portalis
 
-## Project participants:
-
-    -Jadin Raphaël
+## Project author:
+Jadin Raphaël
